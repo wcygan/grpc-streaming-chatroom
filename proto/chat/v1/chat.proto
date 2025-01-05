@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package chat.v1;
+
+// The ChatService defines a single bidirectional streaming RPC.
+service ChatService {
+  // ChatStream is a bidirectional streaming method. Each client opens a stream,
+  // sends messages, and receives messages from other clients in real time.
+  rpc ChatStream(stream ChatMessage) returns (stream ChatMessage);
+}
+
+// ChatMessage holds basic chat info.
+message ChatMessage {
+  string user = 1;
+  string text = 2;
+  string timestamp = 3; // For simplicity, just a string.
+}
