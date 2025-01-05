@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	gonanoid "github.com/matoous/go-nanoid/v2"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
@@ -33,14 +34,16 @@ func main() {
 	}
 	defer stream.CloseSend()
 
-	// Prompt user for a name.
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Print("Enter your username: ")
-	username, _ := reader.ReadString('\n')
-	username = strings.TrimSpace(username)
-	if username == "" {
-		username = "Anonymous"
+	// Generate a nanoid for the username
+	username, err := gonanoid.New(7)
+	if err != nil {
+		log.Fatalf("Failed to generate nanoid: %v", err)
 	}
+
+	fmt.Printf("Your username is: %s\n", username)
+
+	// Create a reader for user input
+	reader := bufio.NewReader(os.Stdin)
 
 	// Start a goroutine to receive messages from the server.
 	go func() {

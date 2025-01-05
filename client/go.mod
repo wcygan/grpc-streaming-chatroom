@@ -7,6 +7,7 @@ require google.golang.org/grpc v1.69.2
 require (
 	buf.build/gen/go/wcygan/grpc-streaming-chatroom/grpc/go v1.5.1-20250105185955-e107db5baafe.2 // indirect
 	buf.build/gen/go/wcygan/grpc-streaming-chatroom/protocolbuffers/go v1.36.1-20250105185955-e107db5baafe.1 // indirect
+	github.com/matoous/go-nanoid/v2 v2.1.0 // indirect
 	golang.org/x/net v0.30.0 // indirect
 	golang.org/x/sys v0.26.0 // indirect
 	golang.org/x/text v0.19.0 // indirect

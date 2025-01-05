@@ -42,3 +42,4 @@ docker rmi wcygan/grpc-chat-server
 ## Things to work on
 
 - TUI for Client (Charm Bubbletea)
+- Docs on how to develop with this project (hot reloading?)
