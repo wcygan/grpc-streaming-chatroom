@@ -22,22 +22,18 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Buf CLI
-        uses: bufbuild/buf-setup-action@v1.28.1
-
-      - name: Lint proto files
-        uses: bufbuild/buf-lint-action@v1
+        uses: bufbuild/buf-setup-action@v1.45.0
         with:
-          input: proto
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Generate code from proto files
-        uses: bufbuild/buf-generate-action@v1
-        with:
-          input: proto
-          template: buf.gen.yaml
+      - name: Buf Lint
+        run: |
+          buf lint proto
 
       - name: Push to BSR
         if: github.ref == 'refs/heads/main'
-        uses: bufbuild/buf-push-action@v1
+        uses: bufbuild/buf-push-action@v1.2.0
         with:
           input: proto
-          buf_token: ${{ secrets.BUF_TOKEN }} 
+          draft: false
+          buf_token: ${{ secrets.BUF_TOKEN }}
