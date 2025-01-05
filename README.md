@@ -32,3 +32,8 @@ go get google.golang.org/grpc/credentials@v1.69.2 \
     google.golang.org/grpc/reflection@v1.69.2
 ```
 
+## Things to work on
+
+- Push Protos to BSR (use Github Actions)
+- Build and Push Docker Images (use Github Actions)
+- TUI for Client (Charm Bubbletea)
