@@ -2,38 +2,43 @@
 
 ## Quickstart
 
-Generate the latest protobuf code:
+### Pull the Images
 
 ```bash
-buf generate
+docker pull wcygan/grpc-chat-client
+docker pull wcygan/grpc-chat-server
 ```
 
-Install dependencies:
+### Start the Server
 
 ```bash
-cd server
+docker run -d --name chat-server -p 50051:50051 wcygan/grpc-chat-server
+```
 
-go get google.golang.org/grpc/credentials@v1.69.2 \
-    google.golang.org/grpc/internal/pretty@v1.69.2 \
-    google.golang.org/grpc/encoding/proto@v1.69.2 \
-    github.com/wcygan/grpc-streaming-chatroom/gen/chat/v1@v0.0.0 \
-    google.golang.org/grpc/internal/binarylog@v1.69.2 \
-    google.golang.org/grpc/internal/status@v1.69.2 \
-    google.golang.org/grpc/reflection@v1.69.2
-    
-cd ../client
+### Start Multiple Clients
 
-go get google.golang.org/grpc/credentials@v1.69.2 \
-    google.golang.org/grpc/internal/pretty@v1.69.2 \
-    google.golang.org/grpc/encoding/proto@v1.69.2 \
-    github.com/wcygan/grpc-streaming-chatroom/gen/chat/v1@v0.0.0 \
-    google.golang.org/grpc/internal/binarylog@v1.69.2 \
-    google.golang.org/grpc/internal/status@v1.69.2 \
-    google.golang.org/grpc/reflection@v1.69.2
+Open a new terminal for each client you want to run:
+
+```bash
+docker run -it --network host wcygan/grpc-chat-client
+```
+
+Note: We use `--network host` for the clients to allow them to connect to the server running on localhost.
+
+### Cleanup Docker Resources
+
+Stop and remove the server container:
+```bash
+docker stop chat-server
+docker rm chat-server
+```
+
+Remove the images (optional):
+```bash
+docker rmi wcygan/grpc-chat-client
+docker rmi wcygan/grpc-chat-server
 ```
 
 ## Things to work on
 
-- Push Protos to BSR (use Github Actions)
-- Build and Push Docker Images (use Github Actions)
 - TUI for Client (Charm Bubbletea)
