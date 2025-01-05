@@ -1,0 +1,43 @@
+name: Proto Lint & Generate
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'proto/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'proto/**'
+
+concurrency:
+  group: 'proto-${{ github.ref }}'
+  cancel-in-progress: true
+
+jobs:
+  buf-lint-and-generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Buf CLI
+        uses: bufbuild/buf-setup-action@v1.28.1
+
+      - name: Lint proto files
+        uses: bufbuild/buf-lint-action@v1
+        with:
+          input: proto
+
+      - name: Generate code from proto files
+        uses: bufbuild/buf-generate-action@v1
+        with:
+          input: proto
+          template: buf.gen.yaml
+
+      - name: Push to BSR
+        if: github.ref == 'refs/heads/main'
+        uses: bufbuild/buf-push-action@v1
+        with:
+          input: proto
+          buf_token: ${{ secrets.BUF_TOKEN }} 

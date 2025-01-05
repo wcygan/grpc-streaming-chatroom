@@ -1,34 +1,34 @@
 package main
 
 import (
+	"buf.build/gen/go/wcygan/grpc-streaming-chatroom/grpc/go/chat/v1/chatv1grpc"
+	chatv1 "buf.build/gen/go/wcygan/grpc-streaming-chatroom/protocolbuffers/go/chat/v1"
 	"log"
 	"net"
 	"sync"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
-
-	chatv1 "github.com/wcygan/grpc-streaming-chatroom/gen/chat/v1"
 )
 
 // chatServer implements chatv1.ChatServiceServer.
 type chatServer struct {
-	chatv1.UnimplementedChatServiceServer
+	chatv1grpc.UnimplementedChatServiceServer
 
 	// We store a list of active client streams. Each client
 	// receives messages via its stream.
 	mu      sync.Mutex
-	clients map[chatv1.ChatService_ChatStreamServer]struct{}
+	clients map[chatv1grpc.ChatService_ChatStreamServer]struct{}
 }
 
 func newChatServer() *chatServer {
 	return &chatServer{
-		clients: make(map[chatv1.ChatService_ChatStreamServer]struct{}),
+		clients: make(map[chatv1grpc.ChatService_ChatStreamServer]struct{}),
 	}
 }
 
 // ChatStream handles a bidirectional streaming RPC.
-func (s *chatServer) ChatStream(stream chatv1.ChatService_ChatStreamServer) error {
+func (s *chatServer) ChatStream(stream chatv1grpc.ChatService_ChatStreamServer) error {
 	// Register this new stream (client connection).
 	s.addClient(stream)
 	defer s.removeClient(stream)
@@ -48,14 +48,14 @@ func (s *chatServer) ChatStream(stream chatv1.ChatService_ChatStreamServer) erro
 	}
 }
 
-func (s *chatServer) addClient(stream chatv1.ChatService_ChatStreamServer) {
+func (s *chatServer) addClient(stream chatv1grpc.ChatService_ChatStreamServer) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	s.clients[stream] = struct{}{}
 	log.Printf("Client connected. Total clients: %d", len(s.clients))
 }
 
-func (s *chatServer) removeClient(stream chatv1.ChatService_ChatStreamServer) {
+func (s *chatServer) removeClient(stream chatv1grpc.ChatService_ChatStreamServer) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	delete(s.clients, stream)
@@ -68,7 +68,7 @@ func (s *chatServer) broadcastMessage(msg *chatv1.ChatMessage) {
 
 	for clientStream := range s.clients {
 		// Send message in a separate goroutine to avoid blocking others
-		go func(cs chatv1.ChatService_ChatStreamServer) {
+		go func(cs chatv1grpc.ChatService_ChatStreamServer) {
 			if err := cs.Send(msg); err != nil {
 				log.Printf("Failed to send message to client: %v", err)
 			}
@@ -88,7 +88,7 @@ func main() {
 	grpcServer := grpc.NewServer()
 	reflection.Register(grpcServer) // Allows tools like grpcui or grpcurl to inspect the service
 
-	chatv1.RegisterChatServiceServer(grpcServer, newChatServer())
+	chatv1grpc.RegisterChatServiceServer(grpcServer, newChatServer())
 
 	// Start serving.
 	if err := grpcServer.Serve(lis); err != nil {

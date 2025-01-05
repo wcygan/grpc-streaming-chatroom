@@ -1,8 +1,2 @@
 version: v1
 name: buf.build/wcygan/grpc-streaming-chatroom
-breaking:
-  use:
-    - FILE
-lint:
-  use:
-    - STANDARD

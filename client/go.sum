@@ -1,3 +1,7 @@
+buf.build/gen/go/wcygan/grpc-streaming-chatroom/grpc/go v1.5.1-20250105185955-e107db5baafe.2 h1:PFLgHGYb/kI85INbpAHghOehZhMd0GcVtVSE/qgDwmM=
+buf.build/gen/go/wcygan/grpc-streaming-chatroom/grpc/go v1.5.1-20250105185955-e107db5baafe.2/go.mod h1:V2j/Nz2o+RH531w73qiWWKkPPoice+lTYflAT8LSZ5Y=
+buf.build/gen/go/wcygan/grpc-streaming-chatroom/protocolbuffers/go v1.36.1-20250105185955-e107db5baafe.1 h1:kMR5dfRwf0yev/LuCOJChUM1M1hlhOKl5pmWxMXxlos=
+buf.build/gen/go/wcygan/grpc-streaming-chatroom/protocolbuffers/go v1.36.1-20250105185955-e107db5baafe.1/go.mod h1:SbMzJ1fA+yoRM2R2oPlbazi2YVXmlLoBDg6rmdgpdRQ=
 github.com/go-logr/logr v1.4.2 h1:6pFjapn8bFcIbiKo3XT4j/BhANplGihG6tvd+8rYgrY=
 github.com/go-logr/logr v1.4.2/go.mod h1:9T104GzyrTigFIr8wt5mBrctHMim0Nb2HLGrmQ40KvY=
 github.com/go-logr/stdr v1.2.2 h1:hSWxHoqTgW2S2qGc0LTAI563KZ5YKYRhT3MFKZMbjag=

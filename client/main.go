@@ -12,7 +12,8 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
-	chatv1 "github.com/wcygan/grpc-streaming-chatroom/gen/chat/v1"
+	"buf.build/gen/go/wcygan/grpc-streaming-chatroom/grpc/go/chat/v1/chatv1grpc"
+	chatv1 "buf.build/gen/go/wcygan/grpc-streaming-chatroom/protocolbuffers/go/chat/v1"
 )
 
 func main() {
@@ -23,7 +24,7 @@ func main() {
 	}
 	defer conn.Close()
 
-	client := chatv1.NewChatServiceClient(conn)
+	client := chatv1grpc.NewChatServiceClient(conn)
 
 	// Create the bidirectional stream.
 	stream, err := client.ChatStream(context.Background())
