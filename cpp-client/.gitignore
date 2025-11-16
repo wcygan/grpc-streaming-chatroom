@@ -1,0 +1,7 @@
+# Build artifacts
+*.o
+chat_client
+build/
+
+# Keep generated protobuf files (explicitly tracked)
+!generated/

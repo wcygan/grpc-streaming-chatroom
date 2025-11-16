@@ -18,6 +18,24 @@ cd client
 go run main.go
 ```
 
+### Run C++ Client
+
+**Build the C++ Client:**
+
+Prerequisites: Install gRPC and Protobuf for C++
+- macOS: `brew install grpc protobuf abseil`
+- Ubuntu: `apt-get install libgrpc++-dev libprotobuf-dev libabsl-dev`
+
+```bash
+cd cpp-client
+make
+```
+
+**Run the C++ Client:**
+```bash
+./chat_client
+```
+
 ### Run with Docker
 
 **Pull the Images:**
