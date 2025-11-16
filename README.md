@@ -2,22 +2,40 @@
 
 ## Quickstart
 
-### Pull the Images
+### Run Natively with Go
+
+**Start the Server:**
+```bash
+cd server
+go run main.go
+```
+
+**Start Multiple Clients:**
+
+Open a new terminal for each client:
+```bash
+cd client
+go run main.go
+```
+
+### Run with Docker
+
+**Pull the Images:**
 
 ```bash
 docker pull wcygan/grpc-chat-client
 docker pull wcygan/grpc-chat-server
 ```
 
-### Start the Server
+**Start the Server:**
 
 ```bash
 docker run -d --name chat-server -p 50051:50051 wcygan/grpc-chat-server
 ```
 
-### Start Multiple Clients
+**Start Multiple Clients:**
 
-Open a new terminal for each client you want to run:
+Open a new terminal for each client:
 
 ```bash
 docker run -it --network host wcygan/grpc-chat-client
